@@ -6,14 +6,16 @@
 
 % Usage notes: 
 %     The .dae file needs to have a hemi-light
-%     The light field needs to be rectangular format
-%% Choose example files, make sure they're on the Matlab path.
-% Set preferences
-setpref('RenderToolbox3', 'workingFolder', '/users2/gizem/Documents/Research/LightFieldExample-RT3');
+%     The light field needs to be in rectangular format.
+%     The conditions file has various values for alpha parameter. To make
+%     the sphere a mirror, set alpha to be very small. But do not set it to
+%     zero. 
 
-parentSceneFile = 'LightFieldSphere3.dae';
+%% Choose example files, make sure they're on the Matlab path.
+
+parentSceneFile = 'LightFieldSphere.dae';
 mappingsFile = 'LightFieldSphereMappings.txt';
-% conditionsFile = 'LightFieldSphereConditions.txt';
+conditionsFile = 'LightFieldSphereConditions.txt';
 
 
 % Make sure all illuminants are added to the path. 
@@ -43,7 +45,7 @@ for renderer = {'Mitsuba'}
     hints.renderer = renderer{1};
     
     % make 3 multi-spectral renderings, saved in .mat files
-    nativeSceneFiles = MakeSceneFiles(parentSceneFile, '', mappingsFile, hints);
+    nativeSceneFiles = MakeSceneFiles(parentSceneFile, conditionsFile, mappingsFile, hints);
     radianceDataFiles = BatchRender(nativeSceneFiles, hints);
     
     % condense multi-spectral renderings into one sRGB montage
